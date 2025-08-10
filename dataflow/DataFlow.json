@@ -1,0 +1,36 @@
+{
+	"name": "DataFlow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "Source"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "DerivedColumn"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {12345678901JOAO DA SILVA                 19851215SP0000052500} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Source",
+				"Source derive(CPF = substring('12345678901JOAO DA SILVA 19851215SP0000052500',0, 10),",
+				"          Nome = substring('12345678901JOAO DA SILVA 19851215SP0000052500',11, 40),",
+				"          DT_NASCIMENTO = substring('12345678901JOAO DA SILVA 19851215SP0000052500',41, 48),",
+				"          UF = substring('12345678901JOAO DA SILVA 19851215SP0000052500',49, 50),",
+				"          SALDO_CTA = substring('12345678901JOAO DA SILVA 19851215SP0000052500',51, 60)) ~> DerivedColumn"
+			]
+		}
+	}
+}
