@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"Columns_a": {
+			"Columns_1": {
 				"type": "string"
 			}
 		},
@@ -19,17 +19,12 @@
 				"folderPath": "inbound",
 				"container": "arquivomainframe"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "",
 			"rowDelimiter": "",
 			"escapeChar": "\\",
 			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "12345678901JOAO DA SILVA                 19851215SP0000052500",
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
