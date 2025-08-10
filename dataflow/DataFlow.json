@@ -12,10 +12,21 @@
 					"name": "Source"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ARQPOSICIONALMAINFRAME0120250810_P",
+						"type": "DatasetReference"
+					},
+					"name": "Sink"
+				}
+			],
 			"transformations": [
 				{
 					"name": "DerivedColumn"
+				},
+				{
+					"name": "Select"
 				}
 			],
 			"scriptLines": [
@@ -29,7 +40,20 @@
 				"          Nome = substring('12345678901JOAO DA SILVA 19851215SP0000052500',11, 40),",
 				"          DT_NASCIMENTO = substring('12345678901JOAO DA SILVA 19851215SP0000052500',41, 48),",
 				"          UF = substring('12345678901JOAO DA SILVA 19851215SP0000052500',49, 50),",
-				"          SALDO_CTA = substring('12345678901JOAO DA SILVA 19851215SP0000052500',51, 60)) ~> DerivedColumn"
+				"          SALDO_CTA = substring('12345678901JOAO DA SILVA 19851215SP0000052500',51, 60)) ~> DerivedColumn",
+				"DerivedColumn select(mapColumn(",
+				"          CPF,",
+				"          Nome,",
+				"          DT_NASCIMENTO,",
+				"          UF,",
+				"          SALDO_CTA",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Select",
+				"Select sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Sink"
 			]
 		}
 	}
