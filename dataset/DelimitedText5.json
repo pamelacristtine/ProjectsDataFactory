@@ -19,12 +19,15 @@
 				"folderPath": "inbound",
 				"container": "arquivomainframe"
 			},
-			"columnDelimiter": "",
-			"rowDelimiter": "",
-			"escapeChar": "",
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
 			"firstRowAsHeader": false,
-			"quoteChar": ""
+			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
 	}
 }
