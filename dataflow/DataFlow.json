@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText5",
+						"referenceName": "DelimitedText3",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -31,7 +31,7 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          Column_1 as string",
+				"          {12345678901JOAO DA SILVA                 19851215SP0000052500} as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
