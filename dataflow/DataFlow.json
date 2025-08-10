@@ -6,54 +6,61 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText1",
+						"referenceName": "DelimitedText3",
 						"type": "DatasetReference"
 					},
-					"name": "Source"
+					"name": "source1"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ARQPOSICIONALMAINFRAME0120250810_P",
+						"referenceName": "DelimitedText4",
 						"type": "DatasetReference"
 					},
-					"name": "Sink"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
 				{
-					"name": "DerivedColumn"
+					"name": "DerivedColumn1"
 				},
 				{
-					"name": "Select"
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          {12345678901JOAO DA SILVA                 19851215SP0000052500} as string",
+				"          Column_1 as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Source",
-				"Source derive(CPF = substring('12345678901JOAO DA SILVA 19851215SP0000052500',1, 11),",
-				"          Nome = substring('12345678901JOAO DA SILVA 19851215SP0000052500',12, 41),",
-				"          DT_NASCIMENTO = substring('12345678901JOAO DA SILVA 19851215SP0000052500',42, 49),",
-				"          UF = substring('12345678901JOAO DA SILVA 19851215SP0000052500',50, 51),",
-				"          SALDO_CTA = substring('12345678901JOAO DA SILVA 19851215SP0000052500',52, 61)) ~> DerivedColumn",
-				"DerivedColumn select(mapColumn(",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(CPF = substring(Column_1,1, 11),",
+				"          NOME = substring(Column_1,12, 41),",
+				"          DT_NASC = substring(Column_1,42, 49),",
+				"          UF = substring(Column_1,50, 51),",
+				"          SALDO_CTA = substring(Column_1,52, 61)) ~> DerivedColumn1",
+				"DerivedColumn1 select(mapColumn(",
 				"          CPF,",
-				"          Nome,",
-				"          DT_NASCIMENTO,",
+				"          NOME,",
+				"          DT_NASC,",
 				"          UF,",
 				"          SALDO_CTA",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> Select",
-				"Select sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          CPF as string,",
+				"          Nome as string,",
+				"          DT_NASCIMENTO as string,",
+				"          UF as string,",
+				"          SALDO_CTA as string",
+				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> Sink"
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
