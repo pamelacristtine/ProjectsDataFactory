@@ -1,0 +1,45 @@
+{
+	"name": "DelimitedText3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "part-00000-89c0e3f1-a524-41da-852b-f83d02dfd660-c000.csv",
+				"folderPath": "silver",
+				"container": "arquivomainframe"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CPF",
+				"type": "String"
+			},
+			{
+				"name": "NOME",
+				"type": "String"
+			},
+			{
+				"name": "DT_NASC",
+				"type": "String"
+			},
+			{
+				"name": "UF",
+				"type": "String"
+			},
+			{
+				"name": "SALDO_CTA",
+				"type": "String"
+			}
+		]
+	}
+}
