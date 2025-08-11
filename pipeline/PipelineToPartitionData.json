@@ -104,18 +104,6 @@
 							},
 							{
 								"source": {
-									"name": "DT_NASC",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DT_NASC",
-									"type": "DateTime",
-									"physicalType": "date"
-								}
-							},
-							{
-								"source": {
 									"name": "UF",
 									"type": "String",
 									"physicalType": "String"
@@ -138,6 +126,18 @@
 									"physicalType": "decimal",
 									"scale": 2,
 									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "DT_NASC",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DT_NASC",
+									"type": "DateTime",
+									"physicalType": "date"
 								}
 							}
 						],
