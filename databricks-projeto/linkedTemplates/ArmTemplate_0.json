@@ -805,6 +805,9 @@
 						},
 						{
 							"name": "Select"
+						},
+						{
+							"name": "derivedColumn1"
 						}
 					],
 					"scriptLines": [
@@ -819,7 +822,7 @@
 						"          DT_NASC = substring(Column_1, 42, 8),",
 						"          UF = substring(Column_1, 50, 2),",
 						"          SALDO_CTA = substring(Column_1, 52, 10)) ~> DerivedColumn",
-						"DerivedColumn select(mapColumn(",
+						"derivedColumn1 select(mapColumn(",
 						"          CPF,",
 						"          NOME,",
 						"          DT_NASC,",
@@ -828,6 +831,16 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> Select",
+						"DerivedColumn derive(DT_NASC = toDate(\r",
+						"    concat(\r",
+						"        substring(DT_NASC, 5, 4),\r",
+						"        '-',\r",
+						"        substring(DT_NASC, 3, 2), \r",
+						"        '-',\r",
+						"        substring(DT_NASC, 1, 2)   \r",
+						"    ),\r",
+						"    'yyyy-MM-dd'\r",
+						")) ~> derivedColumn1",
 						"Select sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     skipDuplicateMapInputs: true,",
@@ -954,18 +967,6 @@
 									},
 									{
 										"source": {
-											"name": "DT_NASC",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "DT_NASC",
-											"type": "DateTime",
-											"physicalType": "date"
-										}
-									},
-									{
-										"source": {
 											"name": "UF",
 											"type": "String",
 											"physicalType": "String"
@@ -988,6 +989,18 @@
 											"physicalType": "decimal",
 											"scale": 2,
 											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "DT_NASC",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DT_NASC",
+											"type": "DateTime",
+											"physicalType": "date"
 										}
 									}
 								],
