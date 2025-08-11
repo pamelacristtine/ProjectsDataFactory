@@ -183,7 +183,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PartitionedFile')]",
+			"name": "[concat(parameters('factoryName'), '/PipelineToPartitionData')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -207,7 +207,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"source1": {},
-									"sink1": {}
+									"Sink": {}
 								}
 							},
 							"staging": {},
@@ -298,34 +298,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Parquet_DataLake')]",
 				"[concat(variables('factoryId'), '/datasets/Sql_Server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ARQPOSICIONALMAINFRAME0120250810_P')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "DataLake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "silver",
-						"container": "arquivomainframe"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DataLake')]"
 			]
 		},
 		{
@@ -457,7 +429,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -465,11 +437,18 @@
 					"referenceName": "DataLake",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"Column_1": {
+						"type": "string",
+						"defaultValue": "a"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "ARQPOSICIONALMAINFRAME0120250810.csv",
 						"folderPath": "inbound",
 						"container": "arquivomainframe"
 					},
@@ -489,7 +468,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText4')]",
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -510,28 +489,7 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": [
-					{
-						"name": "CPF",
-						"type": "String"
-					},
-					{
-						"name": "Nome",
-						"type": "String"
-					},
-					{
-						"name": "DT_NASCIMENTO",
-						"type": "String"
-					},
-					{
-						"name": "UF",
-						"type": "String"
-					},
-					{
-						"name": "SALDO_CTA",
-						"type": "String"
-					}
-				]
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/DataLake')]"
@@ -778,7 +736,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "DelimitedText3",
+								"referenceName": "DelimitedText1",
 								"type": "DatasetReference"
 							},
 							"name": "source1"
@@ -787,18 +745,18 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "DelimitedText4",
+								"referenceName": "DelimitedText2",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
+							"name": "Sink"
 						}
 					],
 					"transformations": [
 						{
-							"name": "DerivedColumn1"
+							"name": "DerivedColumn"
 						},
 						{
-							"name": "select1"
+							"name": "Select"
 						}
 					],
 					"scriptLines": [
@@ -808,12 +766,12 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 derive(CPF = substring(Column_1,1, 11),",
-						"          NOME = substring(Column_1,12, 41),",
-						"          DT_NASC = substring(Column_1,42, 49),",
-						"          UF = substring(Column_1,50, 51),",
-						"          SALDO_CTA = substring(Column_1,52, 61)) ~> DerivedColumn1",
-						"DerivedColumn1 select(mapColumn(",
+						"source1 derive(CPF = substring(Column_1, 1, 11),",
+						"          NOME = substring(Column_1, 12, 30),",
+						"          DT_NASC = substring(Column_1, 42, 8),",
+						"          UF = substring(Column_1, 50, 2),",
+						"          SALDO_CTA = substring(Column_1, 52, 10)) ~> DerivedColumn",
+						"DerivedColumn select(mapColumn(",
 						"          CPF,",
 						"          NOME,",
 						"          DT_NASC,",
@@ -821,24 +779,17 @@
 						"          SALDO_CTA",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 sink(allowSchemaDrift: true,",
+						"     skipDuplicateMapOutputs: true) ~> Select",
+						"Select sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          CPF as string,",
-						"          Nome as string,",
-						"          DT_NASCIMENTO as string,",
-						"          UF as string,",
-						"          SALDO_CTA as string",
-						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true) ~> Sink"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText4')]"
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
 			]
 		}
 	]
