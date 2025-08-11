@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "part-00000-fa49f792-2f53-4d94-92e7-2f92357a1aaa-c000.csv",
 				"folderPath": "silver",
 				"container": "arquivomainframe"
 			},
