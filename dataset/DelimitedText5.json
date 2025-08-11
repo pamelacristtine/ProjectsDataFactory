@@ -24,11 +24,6 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "12345678901JOAO DA SILVA                 19851215SP0000052500",
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
