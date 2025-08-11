@@ -344,7 +344,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "part-00000-89c0e3f1-a524-41da-852b-f83d02dfd660-c000.csv",
 						"folderPath": "silver",
 						"container": "arquivomainframe"
 					},
@@ -819,7 +818,7 @@
 						"     ignoreNoFilesFound: false) ~> source1",
 						"source1 derive(CPF = substring(Column_1, 1, 11),",
 						"          NOME = substring(Column_1, 12, 30),",
-						"          DT_NASC = substring(Column_1, 42, 8),",
+						"          DT_NASCIMENTO = substring(Column_1, 42, 8),",
 						"          UF = substring(Column_1, 50, 2),",
 						"          SALDO_CTA = substring(Column_1, 52, 10)) ~> DerivedColumn",
 						"derivedColumn1 select(mapColumn(",
@@ -831,7 +830,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> Select",
-						"DerivedColumn derive(DT_NASC = toDate(DT_NASC, 'yyyyMMdd')) ~> derivedColumn1",
+						"DerivedColumn derive(DT_NASC = toDate(DT_NASCIMENTO, 'yyyyMMdd')) ~> derivedColumn1",
 						"Select sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     skipDuplicateMapInputs: true,",
@@ -853,8 +852,6 @@
 					{
 						"name": "DataFlow",
 						"type": "ExecuteDataFlow",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -885,6 +882,8 @@
 					{
 						"name": "SqlServer",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "DataFlow",
@@ -907,10 +906,6 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"modifiedDatetimeStart": {
-										"value": "@addDays(utcNow(), -1)",
-										"type": "Expression"
-									},
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
