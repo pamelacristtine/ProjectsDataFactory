@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText1",
+						"referenceName": "DelimitedText4",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -33,10 +33,7 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          Column_1 as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 derive(CPF = substring(Column_1, 1, 11),",
