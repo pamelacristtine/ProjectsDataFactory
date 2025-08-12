@@ -7,10 +7,12 @@
 		},
 		"parameters": {
 			"FilePath": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "inbound"
 			},
 			"FileName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "ARQPOSICIONALMAINFRAME0120250810.csv"
 			}
 		},
 		"annotations": [],
