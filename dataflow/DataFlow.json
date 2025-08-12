@@ -5,10 +5,6 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "DelimitedText4",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				}
 			],
@@ -34,8 +30,7 @@
 			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
+				"     validateSchema: false) ~> source1",
 				"source1 derive(CPF = substring(Column_1, 1, 11),",
 				"          NOME = substring(Column_1, 12, 30),",
 				"          DT_NASCIMENTO = substring(Column_1, 42, 8),",
