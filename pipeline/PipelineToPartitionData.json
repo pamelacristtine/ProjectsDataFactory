@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DataFlow",
-				"type": "ExecuteDataFlow",
+				"name": "LookupNaoProcessados",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -15,149 +15,221 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "DataFlow",
-						"type": "DataFlowReference"
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT NomeArquivo, TipoArquivo\nFROM ArquivosExtraidos\nWHERE StatusProcessamento = 'Nao Processado'\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
 				}
 			},
 			{
-				"name": "SqlServer",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
+				"name": "ForEach1",
+				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "DataFlow",
+						"activity": "LookupNaoProcessados",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					}
 				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+					"items": {
+						"value": "@activity('LookupNaoProcessados').output.value",
+						"type": "Expression"
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": false,
-							"keys": [
-								"CPF"
-							],
-							"interimSchemaName": "UPSERT"
-						},
-						"sqlWriterUseTableLock": false,
-						"disableMetricsCollection": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "CPF",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "CPF",
-									"type": "String",
-									"physicalType": "char"
-								}
+					"isSequential": false,
+					"batchCount": 1,
+					"activities": [
+						{
+							"name": "DataFlow",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
 							},
-							{
-								"source": {
-									"name": "NOME",
-									"type": "String",
-									"physicalType": "String"
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DataFlow",
+									"type": "DataFlowReference"
 								},
-								"sink": {
-									"name": "NOME",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "UF",
-									"type": "String",
-									"physicalType": "String"
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
 								},
-								"sink": {
-									"name": "UF",
-									"type": "String",
-									"physicalType": "char"
-								}
-							},
-							{
-								"source": {
-									"name": "SALDO_CTA",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "SALDO_CTA",
-									"type": "Decimal",
-									"physicalType": "decimal",
-									"scale": 2,
-									"precision": 10
-								}
-							},
-							{
-								"source": {
-									"name": "DT_NASC",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DT_NASC",
-									"type": "DateTime",
-									"physicalType": "date"
-								}
+								"traceLevel": "Fine"
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
+						},
+						{
+							"name": "SqlServer_copy",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "DataFlow",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "CPF",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "CPF",
+												"type": "String",
+												"physicalType": "char"
+											}
+										},
+										{
+											"source": {
+												"name": "NOME",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "NOME",
+												"type": "String",
+												"physicalType": "varchar"
+											}
+										},
+										{
+											"source": {
+												"name": "UF",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "UF",
+												"type": "String",
+												"physicalType": "char"
+											}
+										},
+										{
+											"source": {
+												"name": "SALDO_CTA",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "SALDO_CTA",
+												"type": "Decimal",
+												"physicalType": "decimal",
+												"scale": 2,
+												"precision": 10
+											}
+										},
+										{
+											"source": {
+												"name": "DT_NASC",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "DT_NASC",
+												"type": "DateTime",
+												"physicalType": "date"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DelimitedText3",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Script1",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "SqlServer_copy",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "sqlServerLink",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": "UPDATE ArquivosExtraidos\nSET StatusProcessamento = 'Processado',\n    DataProcessamento = GETDATE()\nWHERE NomeArquivo = @nomeArquivo\n"
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DelimitedText3",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference"
-					}
-				]
+					]
+				}
 			}
 		],
 		"annotations": []
