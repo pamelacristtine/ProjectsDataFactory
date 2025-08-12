@@ -7,6 +7,10 @@
 			"metadata": "Nome do Data Factory",
 			"defaultValue": "databricks-projeto"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureBlobStorage1'"
+		},
 		"DataLake_connectionString": {
 			"type": "secureString",
 			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'DataLake'"
@@ -58,6 +62,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
 					"DataLake_connectionString": {
 						"value": "[parameters('DataLake_connectionString')]"
 					},
@@ -79,6 +86,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "databricks-projeto_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'databricks-projeto_ArmTemplate_0')]"
+			]
 		}
 	]
 }

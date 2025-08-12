@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "databricks-projeto"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
 		"DataLake_connectionString": {
 			"value": ""
 		},
