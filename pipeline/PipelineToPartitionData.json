@@ -48,7 +48,7 @@
 					"batchCount": 1,
 					"activities": [
 						{
-							"name": "DataFlow",
+							"name": "dataflow1",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
 							"policy": {
@@ -61,7 +61,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "DataFlow",
+									"referenceName": "dataflow1",
 									"type": "DataFlowReference"
 								},
 								"compute": {
