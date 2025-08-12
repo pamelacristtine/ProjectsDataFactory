@@ -33,7 +33,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "DadosClientes"
+			"table": "ArquivosExtraidos"
 		}
 	}
 }
