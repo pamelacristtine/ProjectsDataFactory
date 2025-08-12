@@ -30,8 +30,6 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "LookupNaoProcessados",
@@ -64,7 +62,19 @@
 							"typeProperties": {
 								"dataflow": {
 									"referenceName": "DataFlow",
-									"type": "DataFlowReference"
+									"type": "DataFlowReference",
+									"datasetParameters": {
+										"source1": {
+											"caminho": {
+												"value": "@item().caminho",
+												"type": "Expression"
+											},
+											"arquivo": {
+												"value": "@item().arquivo",
+												"type": "Expression"
+											}
+										}
+									}
 								},
 								"compute": {
 									"coreCount": 8,
