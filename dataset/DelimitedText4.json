@@ -5,21 +5,13 @@
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"caminho": {
-				"type": "string"
-			},
-			"arquivo": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "@dataset().arquivo",
-				"folderPath": "@dataset().caminho",
+				"fileName": "@item().FileName",
+				"folderPath": "@item().FilePath",
 				"container": "arquivomainframe"
 			},
 			"columnDelimiter": ",",
