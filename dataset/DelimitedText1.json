@@ -25,10 +25,6 @@
 			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
