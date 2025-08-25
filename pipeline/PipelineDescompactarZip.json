@@ -1,5 +1,5 @@
 {
-	"name": "ADF_ZIp",
+	"name": "PipelineDescompactarZip",
 	"properties": {
 		"activities": [
 			{
