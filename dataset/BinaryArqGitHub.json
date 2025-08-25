@@ -5,6 +5,12 @@
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"NomeArquivo": {
+				"type": "string",
+				"defaultValue": "novo"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
