@@ -1,0 +1,19 @@
+{
+	"name": "BinaryArqGitHub",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "arquivos_zip.zip",
+				"folderPath": "inbound",
+				"container": "arquivomainframe"
+			}
+		}
+	}
+}
