@@ -1,0 +1,12 @@
+{
+	"name": "HttpGitHub",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://github.com/pamelacristtine/ProjectsDataFactory/blob/main/arquivos_zip.zip",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
