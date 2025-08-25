@@ -10,13 +10,13 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "arquivos_zip.zip",
+				"fileName": "arquivos",
 				"folderPath": "inbound",
 				"container": "arquivomainframe"
 			},
 			"compression": {
 				"type": "ZipDeflate",
-				"level": "Optimal"
+				"level": "Fastest"
 			}
 		}
 	}
