@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "DescompactarArquivo",
+				"name": "Descompactar",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
