@@ -12,6 +12,10 @@
 				"type": "AzureBlobStorageLocation",
 				"folderPath": "inbound",
 				"container": "arquivomainframe"
+			},
+			"compression": {
+				"type": "ZipDeflate",
+				"level": "Optimal"
 			}
 		}
 	}
