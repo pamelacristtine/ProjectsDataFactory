@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "bronze",
+				"fileName": "arquivos_zip.zip",
+				"folderPath": "inbound",
 				"container": "arquivomainframe"
 			},
 			"compression": {
