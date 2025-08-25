@@ -2,7 +2,7 @@
 	"name": "BinaryCompactado",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage1",
+			"referenceName": "DataLake",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -10,13 +10,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "arquivos.zip",
 				"folderPath": "inbound",
 				"container": "arquivomainframe"
 			},
 			"compression": {
 				"type": "ZipDeflate",
-				"level": "Fastest"
+				"level": "Optimal"
 			}
 		}
 	}
