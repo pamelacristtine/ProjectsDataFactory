@@ -74,7 +74,8 @@
 						"type": "BinarySource",
 						"storeSettings": {
 							"type": "HttpReadSettings",
-							"requestMethod": "GET"
+							"requestMethod": "POST",
+							"requestTimeout": ""
 						},
 						"formatSettings": {
 							"type": "BinaryReadSettings"
