@@ -16,16 +16,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().NomeArquivo",
-					"type": "Expression"
-				},
+				"fileName": "arquivos.zip",
 				"folderPath": "inbound",
 				"container": "arquivomainframe"
-			},
-			"compression": {
-				"type": "ZipDeflate",
-				"level": "Optimal"
 			}
 		}
 	}
