@@ -2,7 +2,7 @@
 	"name": "BinaryArqDescompactado",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "DataLake",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
