@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "https://github.com/pamelacristtine/ProjectsDataFactory/blob/main/arquivos.zip",
+			"url": "https://github.com/pamelacristtine/BootcampWoMakersCode/blob/df1ae4fc0629f1cc45d9f718d845e2865fcfc2e1/data/arquivos.zip",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
