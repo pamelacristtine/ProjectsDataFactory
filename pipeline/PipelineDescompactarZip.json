@@ -25,34 +25,34 @@
 					"source": {
 						"type": "BinarySource",
 						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": false,
-							"deleteFilesAfterCompletion": false
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
 						},
 						"formatSettings": {
 							"type": "BinaryReadSettings",
 							"compressionProperties": {
-								"type": "ZipDeflateReadSettings"
+								"type": "ZipDeflateReadSettings",
+								"preserveZipFileNameAsFolder": false
 							}
 						}
 					},
 					"sink": {
 						"type": "BinarySink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "BinaryCompactado",
+						"referenceName": "BinaryDescompactar",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Binary1",
+						"referenceName": "BinaryFinal",
 						"type": "DatasetReference"
 					}
 				]
@@ -83,20 +83,20 @@
 					"sink": {
 						"type": "BinarySink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "BinaryGitHub",
+						"referenceName": "Binary1",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "BinaryArqGitHub",
+						"referenceName": "BinaryStorage",
 						"type": "DatasetReference"
 					}
 				]
