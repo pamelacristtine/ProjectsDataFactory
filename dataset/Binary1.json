@@ -9,8 +9,7 @@
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation",
-				"relativeUrl": "https://github.com/pamelacristtine/ProjectsDataFactory/blob/main/arquivos.zip"
+				"type": "HttpServerLocation"
 			}
 		}
 	}
