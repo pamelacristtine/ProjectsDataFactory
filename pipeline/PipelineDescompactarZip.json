@@ -5,6 +5,8 @@
 			{
 				"name": "Descompactar",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "SalvarArquivoZip",
